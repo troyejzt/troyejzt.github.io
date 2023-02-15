@@ -1,0 +1,737 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/%5Bobject%20Object%5D">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Troye">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="title: Gin学习记录 - 路由author: Troye 1.基本路由 gin中的路由库是有httprouter做的点此跳转  123456789func main() &amp;#123;   r :&#x3D; gin.Default()   r.GET(&quot;&#x2F;&quot;, func(c *gin.Context) &amp;#123;      c.String(http.StatusOK, &amp;qu">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Troye&#39;s Blog">
+<meta property="og:url" content="http://example.com/2023/02/15/gin_2/index.html">
+<meta property="og:site_name" content="Troye&#39;s Blog">
+<meta property="og:description" content="title: Gin学习记录 - 路由author: Troye 1.基本路由 gin中的路由库是有httprouter做的点此跳转  123456789func main() &amp;#123;   r :&#x3D; gin.Default()   r.GET(&quot;&#x2F;&quot;, func(c *gin.Context) &amp;#123;      c.String(http.StatusOK, &amp;qu">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/Users/troye/workspace/blog/source/img/gin_2_1.png">
+<meta property="og:image" content="http://example.com/img/gin_2_3.png">
+<meta property="og:image" content="http://example.com/img/gin_2_2.png">
+<meta property="article:published_time" content="2023-02-15T07:40:38.336Z">
+<meta property="article:modified_time" content="2023-02-15T09:59:58.697Z">
+<meta property="article:author" content="Troye">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/Users/troye/workspace/blog/source/img/gin_2_1.png">
+  
+  
+  
+  <title>Troye&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Troye&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text=""></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-02-15 15:40" pubdate>
+          2023年2月15日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          6.8k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          57 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none"></h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>title: Gin学习记录 - 路由<br>author: Troye</p>
+<h2 id="1-基本路由"><a href="#1-基本路由" class="headerlink" title="1.基本路由"></a>1.基本路由</h2><ul>
+<li>gin中的路由库是有httprouter做的<a class="btn" href="https://github.com/julienschmidt/httprouter"  target="_blank">点此跳转</a></li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>   r := gin.Default()<br>   r.GET(<span class="hljs-string">&quot;/&quot;</span>, <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(c *gin.Context)</span></span> &#123;<br>      c.String(http.StatusOK, <span class="hljs-string">&quot;Hello World!&quot;</span>)<br>   &#125;)<br>   r.POST(<span class="hljs-string">&quot;/xxxpost&quot;</span>, getting)<br>   r.PUT(<span class="hljs-string">&quot;/xxput&quot;</span>)<br>   r.Run(<span class="hljs-string">&quot;:8080&quot;</span>)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="2-Restful风格API"><a href="#2-Restful风格API" class="headerlink" title="2.Restful风格API"></a>2.Restful风格API</h2><p>gin支持Restful风格API，示例如下：</p>
+<ol>
+<li>获取文章信息 <code>/blog/getxxx -&gt; GET blog/xxx</code></li>
+<li>添加<code> /blog/addxxx -&gt; POST blog/xxx</code></li>
+<li>获取文章信息<code> /blog/updatexxx -&gt; PUT blog/xxx</code></li>
+<li>获取文章信息 <code>/blog/delxxx -&gt; DELETE blog/xxx</code></li>
+</ol>
+<h2 id="3-API参数"><a href="#3-API参数" class="headerlink" title="3.API参数"></a>3.API参数</h2><ul>
+<li>可以通过Context的Param方法来获取API参数</li>
+<li>举例：比如现在有个api为 <code>localhost:8080/zhangsan/drink</code>，也有api为<code>localhost:8080/lisi/eat</code><ul>
+<li>他们有相同共性，形式为 &#x2F;:name&#x2F;*action</li>
+<li>可以通过获取api参数来获得name和action</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>   r := gin.Default()<br>   r.GET(<span class="hljs-string">&quot;/user/:name/*action&quot;</span>, <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(context *gin.Context)</span></span> &#123;<br>      name := context.Param(<span class="hljs-string">&quot;name&quot;</span>)<br>      action := context.Param(<span class="hljs-string">&quot;action&quot;</span>)<br>      <span class="hljs-comment">// 截取</span><br>      action = strings.Trim(action, <span class="hljs-string">&quot;/&quot;</span>)<br>      context.String(http.StatusOK, name+<span class="hljs-string">&quot; is &quot;</span>+action)<br>   &#125;)<br>   r.Run(<span class="hljs-string">&quot;:8080&quot;</span>)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="4-URL参数"><a href="#4-URL参数" class="headerlink" title="4.URL参数"></a>4.URL参数</h2><ul>
+<li>URL参数可以用过<code>DefaultQuery()</code>或者<code>Query()</code>获取</li>
+<li><code>DefaultQuery()</code>若参数不存在，返回默认值，<code>Query()</code>若不存在，返回空串</li>
+<li>示例<code>http://localhost:8080/hello?name=xxx</code></li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>   r := gin.Default()<br>   r.GET(<span class="hljs-string">&quot;/hello&quot;</span>, <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(context *gin.Context)</span></span> &#123;<br>      <span class="hljs-comment">// 指定默认值</span><br>      <span class="hljs-comment">// http://localhost:8080/user 才会打印出来默认值</span><br>      name := context.DefaultQuery(<span class="hljs-string">&quot;name&quot;</span>,<span class="hljs-string">&quot;troye&quot;</span>)<br>      context.String(http.StatusOK,fmt.Sprintf(<span class="hljs-string">&quot;hello %s&quot;</span>,name))<br>   &#125;)<br>   r.Run(<span class="hljs-string">&quot;:8080&quot;</span>)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="5-表单参数"><a href="#5-表单参数" class="headerlink" title="5.表单参数"></a>5.表单参数</h2><ul>
+<li>如果请求为POST，http传输格式有四种：<ul>
+<li>application&#x2F;json</li>
+<li>application&#x2F;x-www-form-unlencoded</li>
+<li>application&#x2F;xml</li>
+<li>application&#x2F;form-data</li>
+</ul>
+</li>
+<li>表单参数可以通过<code>PostForm()</code>获取，该方法默认解析的是x-www-form-unlencoded或form-data格式的参数</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs go">r.POST(<span class="hljs-string">&quot;/form&quot;</span>, <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(context *gin.Context)</span></span> &#123;<br>   types := context.DefaultPostForm(<span class="hljs-string">&quot;type&quot;</span>, <span class="hljs-string">&quot;post&quot;</span>)<br>   username := context.PostForm(<span class="hljs-string">&quot;username&quot;</span>)<br>   password := context.PostForm(<span class="hljs-string">&quot;password&quot;</span>)<br><br>   context.String(http.StatusOK, fmt.Sprintf(<span class="hljs-string">&quot;username: %s, password: %s, type: %s&quot;</span>, username, password, types))<br>&#125;)<br></code></pre></td></tr></table></figure>
+
+
+
+<p>用Postman &#x2F; ApiFox调试一下<br><img src="/Users/troye/workspace/blog/source/img/gin_2_1.png" srcset="/img/loading.gif" lazyload alt="post结果"></p>
+<h2 id="6-上传单个文件"><a href="#6-上传单个文件" class="headerlink" title="6.上传单个文件"></a>6.上传单个文件</h2><h3 id="上传普通文件"><a href="#上传普通文件" class="headerlink" title="上传普通文件"></a>上传普通文件</h3><ul>
+<li><strong>multipart&#x2F;form-data</strong>格式用于文件上传</li>
+<li>gin文件上传与原生的net&#x2F;http方法类似，不同在于gin把request封装在<strong>context.Request</strong>中</li>
+</ul>
+<p>写一个简单前端页面，包含文件上传和提交功能</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-keyword">html</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">html</span> <span class="hljs-attr">lang</span>=<span class="hljs-string">&quot;en&quot;</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">&quot;UTF-8&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;viewport&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">http-equiv</span>=<span class="hljs-string">&quot;X-UA-Compatible&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;ie=edge&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>Document<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">form</span> <span class="hljs-attr">action</span>=<span class="hljs-string">&quot;http://localhost:8080/upload&quot;</span> <span class="hljs-attr">method</span>=<span class="hljs-string">&quot;post&quot;</span> <span class="hljs-attr">enctype</span>=<span class="hljs-string">&quot;multipart/form-data&quot;</span>&gt;</span><br>    上传文件:<span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;file&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;file&quot;</span> &gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;submit&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;提交&quot;</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs go">r.POST(<span class="hljs-string">&quot;/upload&quot;</span>, <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(context *gin.Context)</span></span> &#123;<br>   file, err := context.FormFile(<span class="hljs-string">&quot;file&quot;</span>)<br>   <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>      context.String(<span class="hljs-number">500</span>,<span class="hljs-string">&quot;上传图片出错&quot;</span>)<br>      <span class="hljs-keyword">return</span><br>   &#125;<br>   context.SaveUploadedFile(file,file.Filename)<br>   context.String(http.StatusOK,file.Filename)<br>&#125;)<br></code></pre></td></tr></table></figure>
+
+
+
+<p><strong>效果演示：</strong></p>
+<div class="group-image-container"><div class="group-image-row"><div class="group-image-wrap"><img src="/../img/gin_2_3.png" srcset="/img/loading.gif" lazyload alt="文件上传"></div><div class="group-image-wrap"><img src="/../img/gin_2_2.png" srcset="/img/loading.gif" lazyload alt="upload效果"></div></div></div>
+
+<h3 id="上传特定文件"><a href="#上传特定文件" class="headerlink" title="上传特定文件"></a>上传特定文件</h3><p>如果想要限制上传文件的类型以及大小，但是gin目前暂时没有这些函数，所以基于原生写法写一个可以限制大小以及文件类型的上传函数</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs go">r.POST(<span class="hljs-string">&quot;/upload&quot;</span>, <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(context *gin.Context)</span></span> &#123;<br>   _, headers, err := context.Request.FormFile(<span class="hljs-string">&quot;file&quot;</span>)<br>   <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>      log.Printf(<span class="hljs-string">&quot;Error when try to get file: %v&quot;</span>, err)<br>      <span class="hljs-keyword">return</span><br>   &#125;<br>   <span class="hljs-comment">// headers.Size获取文件大小</span><br>   fmt.Println(headers.Size)<br>   <span class="hljs-keyword">if</span> headers.Size &gt; <span class="hljs-number">1024</span>*<span class="hljs-number">1024</span>*<span class="hljs-number">2</span> &#123;<br>      fmt.Println(<span class="hljs-string">&quot;文件太大了&quot;</span>)<br>      <span class="hljs-keyword">return</span><br>   &#125;<br>   <span class="hljs-comment">// headers.Header.Get(&quot;Content-Type&quot;)获取上传文件的类型</span><br>   <span class="hljs-keyword">if</span> headers.Header.Get(<span class="hljs-string">&quot;Content-Type&quot;</span>) != <span class="hljs-string">&quot;image/png&quot;</span> &#123;<br>      fmt.Println(<span class="hljs-string">&quot;只允许上传png图片&quot;</span>)<br>      <span class="hljs-keyword">return</span><br>   &#125;<br>   context.SaveUploadedFile(headers, <span class="hljs-string">&quot;./img/&quot;</span>+headers.Filename)<br>   context.String(http.StatusOK, headers.Filename)<br>&#125;)<br></code></pre></td></tr></table></figure>
+
+<h2 id="7-Routes-Group"><a href="#7-Routes-Group" class="headerlink" title="7. Routes Group"></a>7. Routes Group</h2><ul>
+<li>Routes Group是为了管理一些相同的URL</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>   r := gin.Default()<br>   v1 := r.Group(<span class="hljs-string">&quot;/v1&quot;</span>)<br>   &#123;<br>      v1.GET(<span class="hljs-string">&quot;/login&quot;</span>, login)<br>      v1.GET(<span class="hljs-string">&quot;/submit&quot;</span>, submit)<br>   &#125;<br>   v2 := r.Group(<span class="hljs-string">&quot;/v2&quot;</span>)<br>   &#123;<br>      v2.POST(<span class="hljs-string">&quot;/login&quot;</span>, login)<br>      v2.POST(<span class="hljs-string">&quot;/submit&quot;</span>, submit)<br>   &#125;<br>   r.Run(<span class="hljs-string">&quot;:8080&quot;</span>)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="8-路由注册与拆分"><a href="#8-路由注册与拆分" class="headerlink" title="8.路由注册与拆分"></a>8.路由注册与拆分</h2><h3 id="1-基本的路由注册"><a href="#1-基本的路由注册" class="headerlink" title="1.基本的路由注册"></a>1.基本的路由注册</h3><p>下面是最基础的gin路由注册方式，适用于路由比较少的简单项目或者demo</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>   r := gin.Default()<br>   r.GET(<span class="hljs-string">&quot;/topgoer&quot;</span>,helloHandler)<br>   r.Run(<span class="hljs-string">&quot;:8080&quot;</span>)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">helloHandler</span><span class="hljs-params">(c *gin.Context)</span></span>  &#123;<br>   c.JSON(http.StatusOK,gin.H&#123;<br>      <span class="hljs-string">&quot;message&quot;</span>: <span class="hljs-string">&quot;Hello www.topgoer.com&quot;</span>,<br>   &#125;)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="2-路由拆分成单独文件或包"><a href="#2-路由拆分成单独文件或包" class="headerlink" title="2.路由拆分成单独文件或包"></a>2.路由拆分成单独文件或包</h3><p>当项目规模增大后，就不适合在main.go文件中去实现路由注册相关逻辑了，更倾向于把路由部分代码拆分出来，形成一个单独的文件或包</p>
+<p>在routers.go文件中定义并注册路由信息</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> (<br>   <span class="hljs-string">&quot;github.com/gin-gonic/gin&quot;</span><br>   <span class="hljs-string">&quot;net/http&quot;</span><br>)<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">helloHandler</span><span class="hljs-params">(c *gin.Context)</span></span> &#123;<br>   c.JSON(http.StatusOK, gin.H&#123;<br>      <span class="hljs-string">&quot;message&quot;</span>: <span class="hljs-string">&quot;Hello www.topgoer.com&quot;</span>,<br>   &#125;)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">setRouter</span><span class="hljs-params">()</span></span> *gin.Engine &#123;<br>   r := gin.Default()<br>   r.GET(<span class="hljs-string">&quot;/topgoer&quot;</span>, helloHandler)<br>   <span class="hljs-keyword">return</span> r<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>在main.go中调用定义好的setupRouter函数</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    r := setupRouter()<br>    <span class="hljs-keyword">if</span> err := r.Run(); err != <span class="hljs-literal">nil</span> &#123;<br>        fmt.Println(<span class="hljs-string">&quot;startup service failed, err:%v\n&quot;</span>, err)<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>此时的目录结构：</p>
+<figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs maxima">gin_demo<br>├── <span class="hljs-built_in">go</span>.<span class="hljs-built_in">mod</span><br>├── <span class="hljs-built_in">go</span>.<span class="hljs-built_in">sum</span><br>├── main.<span class="hljs-built_in">go</span><br>└── routers<br>    └── routers.<span class="hljs-built_in">go</span><br></code></pre></td></tr></table></figure>
+
+<p>PS:如果换package，函数名需要大写</p>
+<h3 id="3-路由拆分成多个文件"><a href="#3-路由拆分成多个文件" class="headerlink" title="3.路由拆分成多个文件"></a>3.路由拆分成多个文件</h3><p>业务逐渐膨胀后，单独一个routers文件已经满足不了我们需求了</p>
+<p>因此可以分开定义多个路由文件，例如：</p>
+<figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs maxima">gin_demo<br>├── <span class="hljs-built_in">go</span>.<span class="hljs-built_in">mod</span><br>├── <span class="hljs-built_in">go</span>.<span class="hljs-built_in">sum</span><br>├── main.<span class="hljs-built_in">go</span><br>└── routers<br>    ├── blog.<span class="hljs-built_in">go</span><br>    └── shop.<span class="hljs-built_in">go</span><br></code></pre></td></tr></table></figure>
+
+<p>在每个router文件中都添加一个LoadXXX的函数，将相关路由注册到指定的路由器</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">LoadShop</span><span class="hljs-params">(e *gin.Engine)</span></span>  &#123;<br>    e.GET(<span class="hljs-string">&quot;/hello&quot;</span>, helloHandler)<br>    e.GET(<span class="hljs-string">&quot;/goods&quot;</span>, goodsHandler)<br>    e.GET(<span class="hljs-string">&quot;/checkout&quot;</span>, checkoutHandler)<br>  ...<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>最终main函数实现的注册逻辑如下：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    r := gin.Default()<br>    routers.LoadBlog(r)<br>    routers.LoadShop(r)<br>    <span class="hljs-keyword">if</span> err := r.Run(); err != <span class="hljs-literal">nil</span> &#123;<br>        fmt.Println(<span class="hljs-string">&quot;startup service failed, err:%v\n&quot;</span>, err)<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="4-拆分到不同app"><a href="#4-拆分到不同app" class="headerlink" title="4.拆分到不同app"></a>4.拆分到不同app</h3><p>有时候项目规模实在太大，那么我们就更倾向于把业务拆分的更详细一些，例如把不同的业务代码拆分成不同的APP。</p>
+<p>因此我们在项目目录下单独定义一个app目录，用来存放我们不同业务线的代码文件，这样就很容易进行横向扩展。大致目录结构如下：</p>
+<figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs maxima">gin_demo<br>├── app<br>│   ├── blog<br>│   │   ├── handler.<span class="hljs-built_in">go</span><br>│   │   └── router.<span class="hljs-built_in">go</span><br>│   └── shop<br>│       ├── handler.<span class="hljs-built_in">go</span><br>│       └── router.<span class="hljs-built_in">go</span><br>├── <span class="hljs-built_in">go</span>.<span class="hljs-built_in">mod</span><br>├── <span class="hljs-built_in">go</span>.<span class="hljs-built_in">sum</span><br>├── main.<span class="hljs-built_in">go</span><br>└── routers<br>    └── routers.<span class="hljs-built_in">go</span><br></code></pre></td></tr></table></figure>
+
+<p>其中app&#x2F;blog&#x2F;router.go用来定义post相关路由信息，具体内容如下：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">Routers</span><span class="hljs-params">(e *gin.Engine)</span></span> &#123;<br>    e.GET(<span class="hljs-string">&quot;/post&quot;</span>, postHandler)<br>    e.GET(<span class="hljs-string">&quot;/comment&quot;</span>, commentHandler)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>app&#x2F;shop&#x2F;router.go用来定义shop相关路由信息，具体内容如下：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">Routers</span><span class="hljs-params">(e *gin.Engine)</span></span> &#123;<br>    e.GET(<span class="hljs-string">&quot;/goods&quot;</span>, goodsHandler)<br>    e.GET(<span class="hljs-string">&quot;/checkout&quot;</span>, checkoutHandler)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>routers&#x2F;routers.go中根据需要定义Include函数用来注册子app中定义的路由，Init函数用来进行路由的初始化操作：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> Option <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(*gin.Engine)</span></span><br><br><span class="hljs-keyword">var</span> options = []Option&#123;&#125;<br><br><span class="hljs-comment">// 注册app的路由配置</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">Include</span><span class="hljs-params">(opts ...Option)</span></span> &#123;<br>    options = <span class="hljs-built_in">append</span>(options, opts...)<br>&#125;<br><br><span class="hljs-comment">// 初始化</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">Init</span><span class="hljs-params">()</span></span> *gin.Engine &#123;<br>    r := gin.New()<br>    <span class="hljs-keyword">for</span> _, opt := <span class="hljs-keyword">range</span> options &#123;<br>        opt(r)<br>    &#125;<br>    <span class="hljs-keyword">return</span> r<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>main.go中按如下方式先注册子app中的路由，然后再进行路由的初始化：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    <span class="hljs-comment">// 加载多个APP的路由配置</span><br>    routers.Include(shop.Routers, blog.Routers)<br>    <span class="hljs-comment">// 初始化路由</span><br>    r := routers.Init()<br>    <span class="hljs-keyword">if</span> err := r.Run(); err != <span class="hljs-literal">nil</span> &#123;<br>        fmt.Println(<span class="hljs-string">&quot;startup service failed, err:%v\n&quot;</span>, err)<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div></div>
+      <div>http://example.com/2023/02/15/gin_2/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Troye</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年2月15日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/02/15/gin_1/" title="Gin学习记录 - Hello World">
+                        <span class="hidden-mobile">Gin学习记录 - Hello World</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
