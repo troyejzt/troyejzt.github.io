@@ -4,6 +4,19 @@
   
   
   <entry>
+    <title>Gin学习记录 - Hello World</title>
+    <link href="/2023/02/15/gin/"/>
+    <url>/2023/02/15/gin/</url>
+    
+    <content type="html"><![CDATA[<h1 id="1-简介"><a href="#1-简介" class="headerlink" title="1.简介"></a>1.简介</h1><h2 id="1-1-介绍"><a href="#1-1-介绍" class="headerlink" title="1.1.介绍"></a>1.1.介绍</h2><ul><li>Gin是golang的微框架，具有快速灵活、容错方便等特点</li><li>web依赖远比Python和Java要小，自身的<code>net/http</code>足够简单，性能好</li><li>借助框架，减少很多封装带来的时间</li></ul><h2 id="1-2-安装"><a href="#1-2-安装" class="headerlink" title="1.2.安装"></a>1.2.安装</h2><ol><li>使用下面的Go命令安装Gin</li></ol><blockquote><p>go get -u github.com&#x2F;gin-gonic&#x2F;gin</p></blockquote><ol start="2"><li>导入到代码中：</li></ol><blockquote><p>import “github.com&#x2F;gin-gonic&#x2F;gin”</p></blockquote><p><strong>环境变量配置：</strong></p><p>编辑<code>~/.bash_profile</code>文件，添加以下代码：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs shell">export GOROOT=/usr/local/Cellar/go/1.10.3/libexec<br><br>export GOPATH=/Users/troye/workspace/Go<br><br>export GOBIN=<br><br>export PATH=$PATH:$&#123;GOPATH//://bin:&#125;/bin<br></code></pre></td></tr></table></figure><p>然后输入<code>go env</code>即可以看到当前Go环境变量</p><p><strong>IDE配置:</strong></p><p>创建新应用后也许会显示<code>GoPath is Empty</code>，这时打开Settings配置下workspace</p><p><img src="/../img/gin_1_1.png" alt="GoPath配置"></p><h2 id="1-3-示例"><a href="#1-3-示例" class="headerlink" title="1.3.示例"></a>1.3.示例</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> (<br>   <span class="hljs-string">&quot;github.com/gin-gonic/gin&quot;</span><br>   <span class="hljs-string">&quot;net/http&quot;</span><br>)<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>   <span class="hljs-comment">// 1. 创建路由</span><br>   r := gin.Default()<br>   <span class="hljs-comment">// 2. 绑定路由规则</span><br>   r.GET(<span class="hljs-string">&quot;/&quot;</span>,<span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(c *gin.Context)</span></span> &#123;<br>      c.String(http.StatusOK,<span class="hljs-string">&quot;Hello World!&quot;</span>)<br>   &#125;)<br>   <br>   <span class="hljs-comment">// 3. 监听端口，默认8080</span><br>   r.Run(<span class="hljs-string">&quot;:8080&quot;</span>)<br>&#125;<br></code></pre></td></tr></table></figure><ul><li>运行后，浏览器打开<code>http://localhost:8080/</code>即可看到下述结果</li></ul><img src="../img/gin_1_2.png" alt="结果" style="zoom:75%;" />]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Hello World</title>
     <link href="/2023/02/13/hello-world/"/>
     <url>/2023/02/13/hello-world/</url>
