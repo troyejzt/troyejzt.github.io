@@ -16,21 +16,23 @@
   <meta name="author" content="Troye">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+    <meta name="description" content="1.JSON数据解析和绑定 客户端&#x2F;前端传参，后端接收并解析到结构体  1234567891011121314151617181920212223242526272829type Login struct &amp;#123;   User     string &#96;json:&quot;user&quot; binding:&quot;required&quot;&#96;   Password str">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://example.com/2023/02/13/hello-world/index.html">
+<meta property="og:title" content="Gin学习记录 - 数据解析和绑定">
+<meta property="og:url" content="http://example.com/2023/02/15/gin_3/index.html">
 <meta property="og:site_name" content="Troye&#39;s Blog">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta property="og:description" content="1.JSON数据解析和绑定 客户端&#x2F;前端传参，后端接收并解析到结构体  1234567891011121314151617181920212223242526272829type Login struct &amp;#123;   User     string &#96;json:&quot;user&quot; binding:&quot;required&quot;&#96;   Password str">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-02-13T06:34:31.899Z">
-<meta property="article:modified_time" content="2023-02-15T06:28:44.633Z">
+<meta property="og:image" content="http://example.com/img/gin_3_1.png">
+<meta property="article:published_time" content="2023-02-15T06:27:06.381Z">
+<meta property="article:modified_time" content="2023-02-16T06:23:14.606Z">
 <meta property="article:author" content="Troye">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/img/gin_3_1.png">
   
   
   
-  <title>Hello World - Troye&#39;s Blog</title>
+  <title>Gin学习记录 - 数据解析和绑定 - Troye&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -196,7 +198,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Hello World"></span>
+            <span id="subtitle" data-typed-text="Gin学习记录 - 数据解析和绑定"></span>
           
         </div>
 
@@ -207,8 +209,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-02-13 14:34" pubdate>
-          2023年2月13日 下午
+        <time datetime="2023-02-15 14:27" pubdate>
+          2023年2月15日 下午
         </time>
       </span>
     
@@ -219,7 +221,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          367 字
+          2.6k 字
         
       </span>
     
@@ -230,7 +232,7 @@
         
         
         
-          4 分钟
+          22 分钟
         
       </span>
     
@@ -268,24 +270,27 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Hello World</h1>
+            <h1 style="display: none">Gin学习记录 - 数据解析和绑定</h1>
             
             
               <div class="markdown-body">
                 
-                <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo new <span class="hljs-string">&quot;My New Post&quot;</span><br></code></pre></td></tr></table></figure>
+                <h2 id="1-JSON数据解析和绑定"><a href="#1-JSON数据解析和绑定" class="headerlink" title="1.JSON数据解析和绑定"></a>1.JSON数据解析和绑定</h2><ul>
+<li>客户端&#x2F;前端传参，后端接收并解析到结构体</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> Login <span class="hljs-keyword">struct</span> &#123;<br>   User     <span class="hljs-type">string</span> <span class="hljs-string">`json:&quot;user&quot; binding:&quot;required&quot;`</span><br>   Password <span class="hljs-type">string</span> <span class="hljs-string">`json:&quot;password&quot; binding:&quot;required&quot;`</span><br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>   <span class="hljs-comment">// 1.创建路由</span><br>   <span class="hljs-comment">// 默认使用 Logger()和 Recovery()</span><br>   r := gin.Default()<br>   <span class="hljs-comment">// Json绑定</span><br>   r.POST(<span class="hljs-string">&quot;loginJSON&quot;</span>, <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(c *gin.Context)</span></span> &#123;<br>      <span class="hljs-comment">// 声明接收的变量</span><br>      <span class="hljs-keyword">var</span> json Login<br>      <span class="hljs-comment">// 将request的body中数据，自动按照json格式解析到结构体</span><br>      <span class="hljs-keyword">if</span> err := c.ShouldBindJSON(&amp;json); err != <span class="hljs-literal">nil</span> &#123;<br>         <span class="hljs-comment">// 返回错误信息</span><br>         <span class="hljs-comment">// gin.H封装了生成json数据的工具</span><br>         c.JSON(http.StatusBadRequest, gin.H&#123;<span class="hljs-string">&quot;error&quot;</span>: err.Error()&#125;)<br>         <span class="hljs-keyword">return</span><br>      &#125;<br>      <span class="hljs-comment">// 判断用户名密码是否正确</span><br>      <span class="hljs-keyword">if</span> json.User != <span class="hljs-string">&quot;root&quot;</span> || json.Password != <span class="hljs-string">&quot;admin&quot;</span> &#123;<br>         c.JSON(http.StatusBadRequest, gin.H&#123;<span class="hljs-string">&quot;status&quot;</span>: <span class="hljs-string">&quot;304&quot;</span>&#125;)<br>         <span class="hljs-keyword">return</span><br>      &#125;<br>      c.JSON(http.StatusOK, gin.H&#123;<span class="hljs-string">&quot;status&quot;</span>: <span class="hljs-string">&quot;200&quot;</span>&#125;)<br>   &#125;)<br>   r.Run()<br>&#125;<br></code></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo server<br></code></pre></td></tr></table></figure>
+<p><strong>效果如下：</strong></p>
+<p><img src="/../img/gin_3_1.png" srcset="/img/loading.gif" lazyload alt="效果"></p>
+<h2 id="2-表单数据解析和绑定"><a href="#2-表单数据解析和绑定" class="headerlink" title="2.表单数据解析和绑定"></a>2.表单数据解析和绑定</h2><p>由于POST存在许多种Content-Type，因此不一定是通过Json方式传递</p>
+<p>因此使用<code>context.Bind()</code>方式，gin会自动的识别content-type</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> Login <span class="hljs-keyword">struct</span> &#123;<br>   User     <span class="hljs-type">string</span> <span class="hljs-string">`json:&quot;user&quot; binding:&quot;required&quot; form:&quot;username&quot;`</span><br>   Password <span class="hljs-type">string</span> <span class="hljs-string">`json:&quot;password&quot; binding:&quot;required&quot; form:&quot;password&quot;`</span><br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>   <span class="hljs-comment">// 1.创建路由</span><br>   <span class="hljs-comment">// 默认使用 Logger()和 Recovery()</span><br>   r := gin.Default()<br>   r.POST(<span class="hljs-string">&quot;loginForm&quot;</span>, <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(c *gin.Context)</span></span> &#123;<br>      <span class="hljs-keyword">var</span> form Login<br>      <span class="hljs-keyword">if</span> err := c.Bind(&amp;form); err != <span class="hljs-literal">nil</span> &#123;<br>         c.JSON(http.StatusBadRequest, gin.H&#123;<span class="hljs-string">&quot;error&quot;</span>: err.Error()&#125;)<br>         <span class="hljs-keyword">return</span><br>      &#125;<br>      <span class="hljs-comment">// 判断用户名密码是否正确</span><br>      <span class="hljs-keyword">if</span> form.User != <span class="hljs-string">&quot;root&quot;</span> || form.Password != <span class="hljs-string">&quot;admin&quot;</span> &#123;<br>         c.JSON(http.StatusBadRequest, gin.H&#123;<span class="hljs-string">&quot;status&quot;</span>: <span class="hljs-string">&quot;304&quot;</span>&#125;)<br>         <span class="hljs-keyword">return</span><br>      &#125;<br>      c.JSON(http.StatusOK, gin.H&#123;<span class="hljs-string">&quot;status&quot;</span>: <span class="hljs-string">&quot;200&quot;</span>&#125;)<br>   &#125;)<br>   r.Run()<br>&#125;<br></code></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo generate<br></code></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo deploy<br></code></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+<h2 id="URL数据解析和绑定"><a href="#URL数据解析和绑定" class="headerlink" title="URL数据解析和绑定"></a>URL数据解析和绑定</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> Login <span class="hljs-keyword">struct</span> &#123;<br>   User     <span class="hljs-type">string</span> <span class="hljs-string">`json:&quot;user&quot; binding:&quot;required&quot; form:&quot;username&quot; uri:&quot;username&quot;`</span><br>   Password <span class="hljs-type">string</span> <span class="hljs-string">`json:&quot;password&quot; binding:&quot;required&quot; form:&quot;password&quot; uri:&quot;password&quot;`</span><br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>   <span class="hljs-comment">// 1.创建路由</span><br>   <span class="hljs-comment">// 默认使用 Logger()和 Recovery()</span><br>   r := gin.Default()<br><br>   r.POST(<span class="hljs-string">&quot;/:username/:password&quot;</span>, <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(c *gin.Context)</span></span> &#123;<br>      <span class="hljs-keyword">var</span> login Login<br>      <span class="hljs-keyword">if</span> err := c.ShouldBindUri(&amp;login); err != <span class="hljs-literal">nil</span> &#123;<br>         c.JSON(http.StatusBadRequest, gin.H&#123;<span class="hljs-string">&quot;error&quot;</span>: err.Error()&#125;)<br>         <span class="hljs-keyword">return</span><br>      &#125;<br>      <span class="hljs-comment">// 判断用户名密码是否正确</span><br>      <span class="hljs-keyword">if</span> login.User != <span class="hljs-string">&quot;root&quot;</span> || login.Password != <span class="hljs-string">&quot;admin&quot;</span> &#123;<br>         c.JSON(http.StatusBadRequest, gin.H&#123;<span class="hljs-string">&quot;status&quot;</span>: <span class="hljs-string">&quot;304&quot;</span>&#125;)<br>         <span class="hljs-keyword">return</span><br>      &#125;<br>      c.JSON(http.StatusOK, gin.H&#123;<span class="hljs-string">&quot;status&quot;</span>: <span class="hljs-string">&quot;200&quot;</span>&#125;)<br>   &#125;)<br>   r.Run()<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>访问<code>http://localhost:8080/root/admin</code>，即可返回正确的response</p>
 
                 
               </div>
@@ -303,8 +308,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Hello World</div>
-      <div>http://example.com/2023/02/13/hello-world/</div>
+      <div>Gin学习记录 - 数据解析和绑定</div>
+      <div>http://example.com/2023/02/15/gin_3/</div>
     </div>
     <div class="license-meta">
       
@@ -316,7 +321,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年2月13日</div>
+          <div>2023年2月15日</div>
         </div>
       
       
@@ -348,7 +353,7 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/02/15/gin_3/" title="Gin学习记录 - 数据解析和绑定">
+                      <a href="/2023/02/15/gin_1/" title="Gin学习记录 - 数据解析和绑定">
                         <i class="iconfont icon-arrowleft"></i>
                         <span class="hidden-mobile">Gin学习记录 - 数据解析和绑定</span>
                         <span class="visible-mobile">上一篇</span>
@@ -357,6 +362,12 @@
                   </article>
                   <article class="post-next col-6">
                     
+                    
+                      <a href="/2023/02/13/hello-world/" title="Hello World">
+                        <span class="hidden-mobile">Hello World</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
                     
                   </article>
                 </div>
