@@ -16,24 +16,21 @@
   <meta name="author" content="Troye">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1.全局中间件 所有请求都经过这中间件  123456789101112131415161718192021222324252627&#x2F;&#x2F; MiddleWare 定义中间件func MiddleWare() gin.HandlerFunc &amp;#123;   return func(c *gin.Context) &amp;#123;      t :&#x3D; time.Now()      fmt.Println">
+    <meta name="description" content="1.简介Air是为Go应用开发设计的另外一个热重载的命令行工具。只需在你的项目根目录下输入air，然后放在一边，专注于代码即可 2.安装推荐使用install.sh 1234567# binary 文件会是在 $(go env GOPATH)&#x2F;bin&#x2F;aircurl -sSfL https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;cosmtrek&#x2F;air&#x2F;master&#x2F;instal">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Gin学习记录 - 中间件">
-<meta property="og:url" content="http://example.com/2023/02/16/gin_4/index.html">
+<meta property="og:title" content="Go神器 - Air">
+<meta property="og:url" content="http://example.com/2023/02/16/air/index.html">
 <meta property="og:site_name" content="Troye&#39;s Blog">
-<meta property="og:description" content="1.全局中间件 所有请求都经过这中间件  123456789101112131415161718192021222324252627&#x2F;&#x2F; MiddleWare 定义中间件func MiddleWare() gin.HandlerFunc &amp;#123;   return func(c *gin.Context) &amp;#123;      t :&#x3D; time.Now()      fmt.Println">
+<meta property="og:description" content="1.简介Air是为Go应用开发设计的另外一个热重载的命令行工具。只需在你的项目根目录下输入air，然后放在一边，专注于代码即可 2.安装推荐使用install.sh 1234567# binary 文件会是在 $(go env GOPATH)&#x2F;bin&#x2F;aircurl -sSfL https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;cosmtrek&#x2F;air&#x2F;master&#x2F;instal">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/img/gin_4_1.png">
-<meta property="og:image" content="http://example.com/img/gin_4_2.png">
-<meta property="article:published_time" content="2023-02-16T06:36:29.000Z">
-<meta property="article:modified_time" content="2023-02-16T07:45:44.334Z">
+<meta property="article:published_time" content="2023-02-16T08:32:10.000Z">
+<meta property="article:modified_time" content="2023-02-16T08:41:54.182Z">
 <meta property="article:author" content="Troye">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/img/gin_4_1.png">
   
   
   
-  <title>Gin学习记录 - 中间件 - Troye&#39;s Blog</title>
+  <title>Go神器 - Air - Troye&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -199,7 +196,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Gin学习记录 - 中间件"></span>
+            <span id="subtitle" data-typed-text="Go神器 - Air"></span>
           
         </div>
 
@@ -210,7 +207,7 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-02-16 14:36" pubdate>
+        <time datetime="2023-02-16 16:32" pubdate>
           2023年2月16日 下午
         </time>
       </span>
@@ -222,7 +219,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.5k 字
+          531 字
         
       </span>
     
@@ -233,7 +230,7 @@
         
         
         
-          13 分钟
+          5 分钟
         
       </span>
     
@@ -271,34 +268,32 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Gin学习记录 - 中间件</h1>
+            <h1 style="display: none">Go神器 - Air</h1>
             
             
               <div class="markdown-body">
                 
-                <h2 id="1-全局中间件"><a href="#1-全局中间件" class="headerlink" title="1.全局中间件"></a>1.全局中间件</h2><ul>
-<li>所有请求都经过这中间件</li>
-</ul>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-comment">// MiddleWare 定义中间件</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">MiddleWare</span><span class="hljs-params">()</span></span> gin.HandlerFunc &#123;<br>   <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(c *gin.Context)</span></span> &#123;<br>      t := time.Now()<br>      fmt.Println(<span class="hljs-string">&quot;中间件开始执行了&quot;</span>)<br>      <span class="hljs-comment">// 设置变量到context的key中，可以通过Get()取</span><br>      c.Set(<span class="hljs-string">&quot;request&quot;</span>, <span class="hljs-string">&quot;中间件&quot;</span>)<br>      status := c.Writer.Status()<br>      fmt.Println(<span class="hljs-string">&quot;中间件执行完毕&quot;</span>, status)<br>      t2 := time.Since(t)<br>      fmt.Println(<span class="hljs-string">&quot;time:&quot;</span>, t2)<br>   &#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>   r := gin.Default()<br>   r.Use(MiddleWare())<br>   &#123;<br>      r.GET(<span class="hljs-string">&quot;/ce&quot;</span>, <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(c *gin.Context)</span></span> &#123;<br>         req, _ := c.Get(<span class="hljs-string">&quot;request&quot;</span>)<br>         fmt.Println(<span class="hljs-string">&quot;request:&quot;</span>, req)<br>         <span class="hljs-comment">//页面接收</span><br>         c.JSON(http.StatusOK, gin.H&#123;<span class="hljs-string">&quot;request&quot;</span>: req&#125;)<br>      &#125;)<br>   &#125;<br>   r.Run()<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p><strong>输出结果：</strong></p>
-<p><img src="/../img/gin_4_1.png" srcset="/img/loading.gif" lazyload alt="运行结果"></p>
-<h2 id="2-局部中间件"><a href="#2-局部中间件" class="headerlink" title="2.局部中间件"></a>2.局部中间件</h2><ul>
-<li>有的时候仅需要一些路由走指定的路由，可以将中间件放到注册位置</li>
-<li>效果和全局一样，但是不用每个接口都走这个</li>
-</ul>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-comment">//局部中间键使用</span><br>  r.GET(<span class="hljs-string">&quot;/ce&quot;</span>, MiddleWare(), <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(c *gin.Context)</span></span> &#123;<br>      <span class="hljs-comment">// 取值</span><br>      req, _ := c.Get(<span class="hljs-string">&quot;request&quot;</span>)<br>      fmt.Println(<span class="hljs-string">&quot;request:&quot;</span>, req)<br>      <span class="hljs-comment">// 页面接收</span><br>      c.JSON(<span class="hljs-number">200</span>, gin.H&#123;<span class="hljs-string">&quot;request&quot;</span>: req&#125;)<br>  &#125;)<br></code></pre></td></tr></table></figure>
+                <h2 id="1-简介"><a href="#1-简介" class="headerlink" title="1.简介"></a>1.简介</h2><p>Air是为Go应用开发设计的另外一个热重载的命令行工具。只需在你的项目根目录下输入air，然后放在一边，专注于代码即可</p>
+<h2 id="2-安装"><a href="#2-安装" class="headerlink" title="2.安装"></a>2.安装</h2><p>推荐使用<strong>install.sh</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">binary 文件会是在 $(go <span class="hljs-built_in">env</span> GOPATH)/bin/air</span><br>curl -sSfL https://raw.githubusercontent.com/cosmtrek/air/master/install.sh | sh -s -- -b $(go env GOPATH)/bin<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">或者把它安装在 ./bin/ 路径下</span><br>curl -sSfL https://raw.githubusercontent.com/cosmtrek/air/master/install.sh | sh -s<br><br>air -v<br></code></pre></td></tr></table></figure>
 
 
 
-<h2 id="3-练习"><a href="#3-练习" class="headerlink" title="3.练习"></a>3.练习</h2><ul>
-<li>定义程序计时中间件，然后定义2个路由，执行函数后应该重新打印统计的执行时间</li>
-</ul>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">myTime</span><span class="hljs-params">(c *gin.Context)</span></span> &#123;<br>   start := time.Now()<br>   c.Next()<br>   <span class="hljs-comment">// 统计时间</span><br>   since := time.Since(start)<br>   fmt.Println(<span class="hljs-string">&quot;程序用时:&quot;</span>, since)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>   r := gin.Default()<br>   r.Use(myTime)<br>   shoppingGroup := r.Group(<span class="hljs-string">&quot;/shopping&quot;</span>)<br>   &#123;<br>      shoppingGroup.GET(<span class="hljs-string">&quot;/index&quot;</span>, shopIndexHandler)<br>      shoppingGroup.GET(<span class="hljs-string">&quot;/home&quot;</span>, shopHomeHandler)<br>   &#125;<br>   r.Run()<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">shopIndexHandler</span><span class="hljs-params">(c *gin.Context)</span></span> &#123;<br>   time.Sleep(<span class="hljs-number">5</span> * time.Second)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">shopHomeHandler</span><span class="hljs-params">(c *gin.Context)</span></span> &#123;<br>   time.Sleep(<span class="hljs-number">3</span> * time.Second)<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>使用<code>go install</code></p>
+<p>使用Go的版本为1.16或更高</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">go install github.com/cosmtrek/air@latest<br></code></pre></td></tr></table></figure>
 
-<p><strong>效果如下：</strong></p>
-<p><img src="/../img/gin_4_2.png" srcset="/img/loading.gif" lazyload alt="运行结果"></p>
-<h2 id="4-中间件推荐"><a href="#4-中间件推荐" class="headerlink" title="4.中间件推荐"></a>4.中间件推荐</h2><p><a target="_blank" rel="noopener" href="https://github.com/gin-gonic/contrib/blob/master/README.md">中间件推荐</a></p>
+
+
+<h2 id="3-使用方法"><a href="#3-使用方法" class="headerlink" title="3.使用方法"></a>3.使用方法</h2><p>进入项目文件夹</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">cd /path/to/your_project<br></code></pre></td></tr></table></figure>
+
+<p>运行以下命令初始化，把默认配置添加到当前路径下的<code>.air.toml</code>文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">bin/./air init<br></code></pre></td></tr></table></figure>
+
+<p>在这之后，只需要执行air命令，无需添加额外的变量，它就能使用<code>.air.toml</code>文件中的配置了</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">bin/./air<br></code></pre></td></tr></table></figure>
+
 
                 
               </div>
@@ -316,8 +311,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Gin学习记录 - 中间件</div>
-      <div>http://example.com/2023/02/16/gin_4/</div>
+      <div>Go神器 - Air</div>
+      <div>http://example.com/2023/02/16/air/</div>
     </div>
     <div class="license-meta">
       
@@ -361,18 +356,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/02/16/air/" title="Go神器 - Air">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Go神器 - Air</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/02/16/gin_3/" title="Gin学习记录 - 数据解析和绑定">
-                        <span class="hidden-mobile">Gin学习记录 - 数据解析和绑定</span>
+                      <a href="/2023/02/16/gin_4/" title="Gin学习记录 - 中间件">
+                        <span class="hidden-mobile">Gin学习记录 - 中间件</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

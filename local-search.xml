@@ -4,6 +4,19 @@
   
   
   <entry>
+    <title>Go神器 - Air</title>
+    <link href="/2023/02/16/air/"/>
+    <url>/2023/02/16/air/</url>
+    
+    <content type="html"><![CDATA[<h2 id="1-简介"><a href="#1-简介" class="headerlink" title="1.简介"></a>1.简介</h2><p>Air是为Go应用开发设计的另外一个热重载的命令行工具。只需在你的项目根目录下输入air，然后放在一边，专注于代码即可</p><h2 id="2-安装"><a href="#2-安装" class="headerlink" title="2.安装"></a>2.安装</h2><p>推荐使用<strong>install.sh</strong></p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">binary 文件会是在 $(go <span class="hljs-built_in">env</span> GOPATH)/bin/air</span><br>curl -sSfL https://raw.githubusercontent.com/cosmtrek/air/master/install.sh | sh -s -- -b $(go env GOPATH)/bin<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">或者把它安装在 ./bin/ 路径下</span><br>curl -sSfL https://raw.githubusercontent.com/cosmtrek/air/master/install.sh | sh -s<br><br>air -v<br></code></pre></td></tr></table></figure><p>使用<code>go install</code></p><p>使用Go的版本为1.16或更高</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">go install github.com/cosmtrek/air@latest<br></code></pre></td></tr></table></figure><h2 id="3-使用方法"><a href="#3-使用方法" class="headerlink" title="3.使用方法"></a>3.使用方法</h2><p>进入项目文件夹</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">cd /path/to/your_project<br></code></pre></td></tr></table></figure><p>运行以下命令初始化，把默认配置添加到当前路径下的<code>.air.toml</code>文件</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">bin/./air init<br></code></pre></td></tr></table></figure><p>在这之后，只需要执行air命令，无需添加额外的变量，它就能使用<code>.air.toml</code>文件中的配置了</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">bin/./air<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Gin学习记录 - 中间件</title>
     <link href="/2023/02/16/gin_4/"/>
     <url>/2023/02/16/gin_4/</url>
